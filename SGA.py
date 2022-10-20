@@ -12,27 +12,25 @@ class SGA:
         self.pr_krzyz = pr_krzyz
         self.pr_mut = pr_mut
 
-
-    def funkcja_celu(self,x) -> int:
+    def __funkcja_celu(self,x) -> int:
         return (self.a*x*x) + (self.b*x) + self.c
 
     def wylosuj_pierwsza_populacje(self) -> list:
         populacja = list()
         for i in range(self.ile_os):
             populacja.append(random.randrange(0,255))
-        print(populacja)
 
         return populacja
-
 
     def sprawdzenie_funkcji_celu(self,populacja) -> dict:
         wartosci_funkcji_celu = dict()
         for item in populacja:
-            wartosci_funkcji_celu[item] = self.funkcja_celu(item)
+            wartosci_funkcji_celu[item] = self.__funkcja_celu(item)
 
         return wartosci_funkcji_celu
 
-    def wyliczenie_wkladu(self,wartosci_funkcji_celu: dict):
+    @staticmethod
+    def wyliczenie_wkladu(wartosci_funkcji_celu: dict):
         suma_funkcji = 0
         for key in wartosci_funkcji_celu.keys():
             suma_funkcji += wartosci_funkcji_celu[key]
@@ -49,8 +47,6 @@ class SGA:
             if index-1 > -1:
                 wklady_w_funkcje_celu[value] = wklady_w_funkcje_celu[value] + values[index-1]
                 values[index] = wklady_w_funkcje_celu[value]
-
-        print(wklady_w_funkcje_celu)
 
         nowa_populacja = list()
         for i in range(self.ile_os):
