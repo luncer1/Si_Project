@@ -9,10 +9,10 @@ class SGA:
         self.ile_wyn = ile_wyn
         self.lb_pop = lb_pop
         self.ile_os = ile_os
-        self.pr_krzyz = pr_krzyz
-        self.pr_mut = pr_mut
+        self.pr_krzyz = pr_krzyz/100
+        self.pr_mut = pr_mut/100
 
-    def __funkcja_celu(self,x) -> int:
+    def funkcja_celu(self,x) -> int:
         return (self.a*x*x) + (self.b*x) + self.c
 
     def wylosuj_pierwsza_populacje(self) -> list:
@@ -22,10 +22,10 @@ class SGA:
 
         return populacja
 
-    def sprawdzenie_funkcji_celu(self,populacja) -> dict:
+    def sprawdzenie_funkcji_celu(self,populacja: list) -> dict:
         wartosci_funkcji_celu = dict()
         for item in populacja:
-            wartosci_funkcji_celu[item] = self.__funkcja_celu(item)
+            wartosci_funkcji_celu[item] = self.funkcja_celu(item)
 
         return wartosci_funkcji_celu
 
@@ -57,3 +57,63 @@ class SGA:
                     break
 
         return nowa_populacja
+
+    def mutacja(self, popuacja: list) -> list:
+        new_populacja = []
+        for osobnik in popuacja:
+            osobnik_binary = lambda x, n :format(x,'b').zfill(n)
+            new_osobnik = []
+            for sign in [*osobnik_binary(osobnik,8)]:
+                mutacja = random.random()
+                if mutacja <= self.pr_mut:
+                    if sign == '0':
+                        new_osobnik.append('1')
+                    else:
+                        new_osobnik.append('0')
+                else:
+                    new_osobnik.append(sign)
+            new_populacja.append(int(''.join(new_osobnik),2))
+        return new_populacja
+
+    @staticmethod
+    def dobranie_pary(populacja: list) -> list:
+        pary = []
+        cnt = 0
+        while len(populacja) > 0:
+            if len(populacja) == 1:
+                pary.append([populacja[0],populacja[0]])
+                populacja.remove(populacja[0])
+                break
+            pierwszy = random.randrange(0,len(populacja),1)
+            drugi = random.randrange(0,len(populacja),1)
+            while pierwszy == drugi:
+                pierwszy = random.randrange(0,len(populacja),1)
+            pary.append([populacja[pierwszy],populacja[drugi]])
+            pierwszy = populacja[pierwszy]
+            drugi = populacja[drugi]
+            populacja.remove(pierwszy)
+            populacja.remove(drugi)
+            cnt += 1
+        return pary
+
+    def krzyzowanie(self, pary:list) -> list:
+        populacja = []
+        osobnik_binary = lambda x, n: format(x, 'b').zfill(n)
+        for para in pary:
+            para_bin = []
+            krzyzowanie = random.random()
+            if krzyzowanie <= self.pr_krzyz:
+                for osobnik in para:
+                    para_bin.append([*osobnik_binary(osobnik,8)])
+                miejsce_krzyz = random.randrange(1,len(para_bin[0]))
+                populacja.append(int(''.join(para_bin[0][:miejsce_krzyz]+para_bin[1][miejsce_krzyz:]),2))
+                populacja.append(int(''.join(para_bin[1][:miejsce_krzyz]+para_bin[0][miejsce_krzyz:]),2))
+            else:
+                for osobnik in para:
+                    populacja.append(osobnik)
+        return populacja
+
+
+
+
+
