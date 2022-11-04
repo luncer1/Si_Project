@@ -27,8 +27,8 @@ class SGA:
         return wartosci_funkcji_celu
 
     def sprawdzenie_ujemnych(self, wartosci_funkcji_celu: dict):
-        if min(wartosci_funkcji_celu.values()) < 0:
-            return min(wartosci_funkcji_celu.values())
+        if min(wartosci_funkcji_celu.values()) <= 0:
+            return min(wartosci_funkcji_celu.values()) + 1
         else:
             return False
 
@@ -42,19 +42,18 @@ class SGA:
             suma_funkcji += 1
 
         for key in wartosci_funkcji_celu.keys():
+
             wartosci_funkcji_celu[key] = wartosci_funkcji_celu[key]/suma_funkcji
 
         return {k: v for k,v in sorted(wartosci_funkcji_celu.items(), key=lambda item:item[1])}
 
     def selekcja(self,wklady_w_funkcje_celu: dict) -> list:
         values = list()
-        print(len(wklady_w_funkcje_celu))
         for index,value in enumerate(wklady_w_funkcje_celu.keys()):
             values.append(wklady_w_funkcje_celu[value])
             if index-1 > -1:
                 wklady_w_funkcje_celu[value] = wklady_w_funkcje_celu[value] + values[index-1]
                 values[index] = wklady_w_funkcje_celu[value]
-=========== HERE ========
         nowa_populacja = list()
         for i in range(self.ile_os):
             losowa_liczba = random.random()
