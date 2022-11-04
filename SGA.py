@@ -2,12 +2,10 @@ import random
 
 
 class SGA:
-    def __init__(self,a,b,c,ile_wyn,lb_pop,ile_os,pr_krzyz,pr_mut):
+    def __init__(self,a,b,c,ile_os,pr_krzyz,pr_mut):
         self.a = a
         self.b = b
         self.c = c
-        self.ile_wyn = ile_wyn
-        self.lb_pop = lb_pop
         self.ile_os = ile_os
         self.pr_krzyz = pr_krzyz/100
         self.pr_mut = pr_mut/100
@@ -19,7 +17,6 @@ class SGA:
         populacja = list()
         for i in range(self.ile_os):
             populacja.append(random.randrange(0,255))
-
         return populacja
 
     def sprawdzenie_funkcji_celu(self,populacja: list) -> dict:
@@ -29,11 +26,20 @@ class SGA:
 
         return wartosci_funkcji_celu
 
+    def sprawdzenie_ujemnych(self, wartosci_funkcji_celu: dict):
+        if min(wartosci_funkcji_celu.values()) < 0:
+            return min(wartosci_funkcji_celu.values())
+        else:
+            return False
+
     @staticmethod
     def wyliczenie_wkladu(wartosci_funkcji_celu: dict):
         suma_funkcji = 0
         for key in wartosci_funkcji_celu.keys():
             suma_funkcji += wartosci_funkcji_celu[key]
+
+        if suma_funkcji == 0:
+            suma_funkcji += 1
 
         for key in wartosci_funkcji_celu.keys():
             wartosci_funkcji_celu[key] = wartosci_funkcji_celu[key]/suma_funkcji
@@ -42,12 +48,13 @@ class SGA:
 
     def selekcja(self,wklady_w_funkcje_celu: dict) -> list:
         values = list()
+        print(len(wklady_w_funkcje_celu))
         for index,value in enumerate(wklady_w_funkcje_celu.keys()):
             values.append(wklady_w_funkcje_celu[value])
             if index-1 > -1:
                 wklady_w_funkcje_celu[value] = wklady_w_funkcje_celu[value] + values[index-1]
                 values[index] = wklady_w_funkcje_celu[value]
-
+=========== HERE ========
         nowa_populacja = list()
         for i in range(self.ile_os):
             losowa_liczba = random.random()
@@ -81,7 +88,7 @@ class SGA:
         cnt = 0
         while len(populacja) > 0:
             if len(populacja) == 1:
-                pary.append([populacja[0],populacja[0]])
+                pary.append([populacja[0]])
                 populacja.remove(populacja[0])
                 break
             pierwszy = random.randrange(0,len(populacja),1)
@@ -101,6 +108,9 @@ class SGA:
         osobnik_binary = lambda x, n: format(x, 'b').zfill(n)
         for para in pary:
             para_bin = []
+            if len(para) == 1:
+                populacja.append(para[0])
+                continue
             krzyzowanie = random.random()
             if krzyzowanie <= self.pr_krzyz:
                 for osobnik in para:
