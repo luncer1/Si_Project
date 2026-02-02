@@ -1,7 +1,5 @@
 # SI_Project
 
-![Project Logo](https://via.placeholder.com/150) <!-- Replace with actual logo if available -->
-
 > **A Python implementation of a Simple Genetic Algorithm (SGA) for optimization problems, specifically maximizing a quadratic objective function.**
 
 [![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -121,44 +119,6 @@ python main.py
 
 ---
 
-## :cherry_blossom: Community
-
-### :fire: Contribution
-
-We ❤️ contributions! Here's how:
-
-1. **🐛 Report a Bug**  
-   Found an issue? Report [here](https://github.com/luncer1/Si_Project/issues).
-
-2. **💡 Request a Feature**  
-   Suggest ideas [here](https://github.com/luncer1/Si_Project/issues).
-
-3. **🔀 Create a Pull Request**  
-   Pick issues [here](https://github.com/luncer1/Si_Project/issues) and submit a PR.
-
-   > New to open-source? Learn more [here](https://www.digitalocean.com/community/tutorial_series/an-introduction-to-open-source) and about PRs [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github).
-
-### :cactus: Branches
-
-- **`main`**: Production branch with stable code.
-
-**Feature Branch Workflow:**
-1. Create branch: `git checkout -b feat-<feature-name>`
-2. Develop and commit.
-3. PR to `main`.
-
-**Pull Request Steps:**
-1. Submit PR to `main`.
-2. Pass checks and reviews.
-
-### :exclamation: Guideline
-- 📏 Follow **PEP 8** style.
-- 🏷️ Use descriptive, English names.
-- 💬 Comment complex logic.
-- 🧪 Test changes before submitting.
-
----
-
 ## :question: FAQ
 
 - **What is the objective function?**  
@@ -181,18 +141,4 @@ We ❤️ contributions! Here's how:
 
 ## :lock: License
 
-Licensed under [MIT](LICENSE). <!-- Add LICENSE file if missing -->
-:exclamation: Guideline
-Follow PEP 8 for Python code style.
-Use descriptive variable and function names (preferably in English).
-Add comments for complex logic.
-Test changes locally before submitting.
-:question: FAQ
-What is the objective function? It's ( f(x) = 11x^2 + x + 6 ), maximized for x in [0, 255].
-How to change parameters? Edit variables in main.py like population_size, crossover_rate, etc.
-Why are results in results.txt? Each line contains the fitness value and the best individual from a trial.
-:star2: Credit/Acknowledgment
-Developed by luncer1.
-Inspired by genetic algorithm concepts in evolutionary computation.
-:lock: License
-This project is licensed under the MIT License. See LICENSE for details. <!-- Add a LICENSE file if not present -->
+Licensed under [MIT](LICENSE).
